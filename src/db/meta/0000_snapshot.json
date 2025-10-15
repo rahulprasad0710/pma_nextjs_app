@@ -1,0 +1,3096 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.email_notifications": {
+      "name": "email_notifications",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "email_notifications_type_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "to": {
+          "name": "to",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "email_notifications_status_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data_id": {
+          "name": "data_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "subject": {
+          "name": "subject",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "text": {
+          "name": "text",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "html_template": {
+          "name": "html_template",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "retries": {
+          "name": "retries",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.notifications": {
+      "name": "notifications",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "link": {
+          "name": "link",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "message": {
+          "name": "message",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "payload": {
+          "name": "payload",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "html_template": {
+          "name": "html_template",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.user_notifications": {
+      "name": "user_notifications",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "isRead": {
+          "name": "isRead",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "read_at": {
+          "name": "read_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "notification_id": {
+          "name": "notification_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.permission": {
+      "name": "permission",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "displayName": {
+          "name": "displayName",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "enumName": {
+          "name": "enumName",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "isActive": {
+          "name": "isActive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "permissionGroupId": {
+          "name": "permissionGroupId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_29b093b202d3ae3e37438ce158c": {
+          "name": "FK_29b093b202d3ae3e37438ce158c",
+          "tableFrom": "permission",
+          "tableTo": "permission_group",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "permissionGroupId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "UQ_b690135d86d59cc689d465ac952": {
+          "columns": [
+            "description"
+          ],
+          "nullsNotDistinct": false,
+          "name": "UQ_b690135d86d59cc689d465ac952"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.permission_group": {
+      "name": "permission_group",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "displayName": {
+          "name": "displayName",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "isActive": {
+          "name": "isActive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "permission_type": {
+          "name": "permission_type",
+          "type": "permission_group_permission_type_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'NORMAL'"
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.user": {
+      "name": "user",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "firstName": {
+          "name": "firstName",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lastName": {
+          "name": "lastName",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "employeeId": {
+          "name": "employeeId",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'PMA-0001'"
+        },
+        "roleId": {
+          "name": "roleId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "department": {
+          "name": "department",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mobileNumber": {
+          "name": "mobileNumber",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0000-00-00'"
+        },
+        "emailVerified": {
+          "name": "emailVerified",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "isActive": {
+          "name": "isActive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "profilePictureUrl": {
+          "name": "profilePictureUrl",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "refreshToken": {
+          "name": "refreshToken",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "verifyEmailToken": {
+          "name": "verifyEmailToken",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_c28e52f758e7bbc53828db92194": {
+          "name": "FK_c28e52f758e7bbc53828db92194",
+          "tableFrom": "user",
+          "tableTo": "role",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "roleId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "UQ_e12875dfb3b1d92d7d7c5377e22": {
+          "columns": [
+            "email"
+          ],
+          "nullsNotDistinct": false,
+          "name": "UQ_e12875dfb3b1d92d7d7c5377e22"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.internal_company": {
+      "name": "internal_company",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "slug": {
+          "name": "slug",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "logoUrl": {
+          "name": "logoUrl",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "address": {
+          "name": "address",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contactEmail": {
+          "name": "contactEmail",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "contactPhone": {
+          "name": "contactPhone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "isActive": {
+          "name": "isActive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "UQ_603c1010f036a929f372c486d43": {
+          "columns": [
+            "name"
+          ],
+          "nullsNotDistinct": false,
+          "name": "UQ_603c1010f036a929f372c486d43"
+        },
+        "UQ_878d68b30c0154062fea7738436": {
+          "columns": [
+            "slug"
+          ],
+          "nullsNotDistinct": false,
+          "name": "UQ_878d68b30c0154062fea7738436"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.feature": {
+      "name": "feature",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "slug": {
+          "name": "slug",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "active": {
+          "name": "active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "profilePicture": {
+          "name": "profilePicture",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "internalCompanyId": {
+          "name": "internalCompanyId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "adminId": {
+          "name": "adminId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "activeSprintId": {
+          "name": "activeSprintId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_caa0dd118dfd19c7d759cb120c9": {
+          "name": "FK_caa0dd118dfd19c7d759cb120c9",
+          "tableFrom": "feature",
+          "tableTo": "internal_company",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "internalCompanyId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "FK_ed968d503f0df9098e1c6300bb9": {
+          "name": "FK_ed968d503f0df9098e1c6300bb9",
+          "tableFrom": "feature",
+          "tableTo": "user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "adminId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "FK_2fe6ae69ed85797061449c48bc7": {
+          "name": "FK_2fe6ae69ed85797061449c48bc7",
+          "tableFrom": "feature",
+          "tableTo": "sprint",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "activeSprintId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.project": {
+      "name": "project",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "profilePicture": {
+          "name": "profilePicture",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "project_status_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'STARTED'"
+        },
+        "priority": {
+          "name": "priority",
+          "type": "project_priority_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'MEDIUM'"
+        },
+        "startDate": {
+          "name": "startDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "endDate": {
+          "name": "endDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "internalCompanyId": {
+          "name": "internalCompanyId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adminId": {
+          "name": "adminId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_423e261ea63a500ff4eaa2f226a": {
+          "name": "FK_423e261ea63a500ff4eaa2f226a",
+          "tableFrom": "project",
+          "tableTo": "internal_company",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "internalCompanyId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "FK_9e5c56e72fbbb0a00cd5d9c3d3b": {
+          "name": "FK_9e5c56e72fbbb0a00cd5d9c3d3b",
+          "tableFrom": "project",
+          "tableTo": "user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "adminId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.project_task_status": {
+      "name": "project_task_status",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "project_id": {
+          "name": "project_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "task_status_id": {
+          "name": "task_status_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_d03f8b56db6956136ecf4b713d0": {
+          "name": "FK_d03f8b56db6956136ecf4b713d0",
+          "tableFrom": "project_task_status",
+          "tableTo": "project",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "project_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "FK_de8c49c6e7d7e8dcdb98decb830": {
+          "name": "FK_de8c49c6e7d7e8dcdb98decb830",
+          "tableFrom": "project_task_status",
+          "tableTo": "task_status",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "task_status_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.task_status": {
+      "name": "task_status",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "color_code": {
+          "name": "color_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'#023047'"
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "UQ_b0c955f276679dd2b2735c3936a": {
+          "columns": [
+            "name"
+          ],
+          "nullsNotDistinct": false,
+          "name": "UQ_b0c955f276679dd2b2735c3936a"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.upload_file": {
+      "name": "upload_file",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "uuid_generate_v4()"
+        },
+        "filename": {
+          "name": "filename",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "originalname": {
+          "name": "originalname",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "size": {
+          "name": "size",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "extension": {
+          "name": "extension",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mimetype": {
+          "name": "mimetype",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fileType": {
+          "name": "fileType",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cloudPath": {
+          "name": "cloudPath",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cloudId": {
+          "name": "cloudId",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cloudUrl": {
+          "name": "cloudUrl",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "createdBy": {
+          "name": "createdBy",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_9b61d2c7827e3f0f6a8bc4cd08a": {
+          "name": "FK_9b61d2c7827e3f0f6a8bc4cd08a",
+          "tableFrom": "upload_file",
+          "tableTo": "user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "createdBy"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.room_type": {
+      "name": "room_type",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "facilities": {
+          "name": "facilities",
+          "type": "room_type_facilities_enum[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "isActive": {
+          "name": "isActive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "thumbnailUrlId": {
+          "name": "thumbnailUrlId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "roomPrice": {
+          "name": "roomPrice",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total_number_of_rooms": {
+          "name": "total_number_of_rooms",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_7d5c54928aa26bd4141501c4d01": {
+          "name": "FK_7d5c54928aa26bd4141501c4d01",
+          "tableFrom": "room_type",
+          "tableTo": "upload_file",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "thumbnailUrlId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "REL_7d5c54928aa26bd4141501c4d0": {
+          "columns": [
+            "thumbnailUrlId"
+          ],
+          "nullsNotDistinct": false,
+          "name": "REL_7d5c54928aa26bd4141501c4d0"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.room": {
+      "name": "room",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "roomNumber": {
+          "name": "roomNumber",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "isActive": {
+          "name": "isActive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "internal_company_id": {
+          "name": "internal_company_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "roomTypeId": {
+          "name": "roomTypeId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_9cbc54fb7e73a5a349b1631aa76": {
+          "name": "FK_9cbc54fb7e73a5a349b1631aa76",
+          "tableFrom": "room",
+          "tableTo": "internal_company",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "internal_company_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "FK_9e55182c47f8ba7a32466131837": {
+          "name": "FK_9e55182c47f8ba7a32466131837",
+          "tableFrom": "room",
+          "tableTo": "room_type",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "roomTypeId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.booking": {
+      "name": "booking",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userBookingId": {
+          "name": "userBookingId",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "checkInDate": {
+          "name": "checkInDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "checkOutDate": {
+          "name": "checkOutDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "payment_status": {
+          "name": "payment_status",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "totalPrice": {
+          "name": "totalPrice",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bookingDate": {
+          "name": "bookingDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "customerId": {
+          "name": "customerId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hotelId": {
+          "name": "hotelId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_72e32d29a7de28b3c469f858d56": {
+          "name": "FK_72e32d29a7de28b3c469f858d56",
+          "tableFrom": "booking",
+          "tableTo": "customer",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "customerId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "FK_a8c9f0b0d2e97e4cdf825d3d830": {
+          "name": "FK_a8c9f0b0d2e97e4cdf825d3d830",
+          "tableFrom": "booking",
+          "tableTo": "internal_company",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "hotelId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.booking_room": {
+      "name": "booking_room",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userBookingRoomId": {
+          "name": "userBookingRoomId",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bookingId": {
+          "name": "bookingId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "roomById": {
+          "name": "roomById",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "room_status": {
+          "name": "room_status",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_d2c224e81b16a2c06aecfcd5842": {
+          "name": "FK_d2c224e81b16a2c06aecfcd5842",
+          "tableFrom": "booking_room",
+          "tableTo": "booking",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "bookingId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "FK_b0e69480a7d40aaaec08623bc1b": {
+          "name": "FK_b0e69480a7d40aaaec08623bc1b",
+          "tableFrom": "booking_room",
+          "tableTo": "room",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "roomById"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.customer": {
+      "name": "customer",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mobileNumber": {
+          "name": "mobileNumber",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0000-00-00'"
+        },
+        "CredentialType": {
+          "name": "CredentialType",
+          "type": "customer_credentialtype_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "associated_internal_company_id": {
+          "name": "associated_internal_company_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "emailVerified": {
+          "name": "emailVerified",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "isActive": {
+          "name": "isActive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "profilePictureUrl": {
+          "name": "profilePictureUrl",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "refreshToken": {
+          "name": "refreshToken",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "verifyEmailToken": {
+          "name": "verifyEmailToken",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_543d17c09c7bb7af9a21bdd2c6d": {
+          "name": "FK_543d17c09c7bb7af9a21bdd2c6d",
+          "tableFrom": "customer",
+          "tableTo": "internal_company",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "associated_internal_company_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "UQ_fdb2f3ad8115da4c7718109a6eb": {
+          "columns": [
+            "email"
+          ],
+          "nullsNotDistinct": false,
+          "name": "UQ_fdb2f3ad8115da4c7718109a6eb"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.booking_service_failures": {
+      "name": "booking_service_failures",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "booking_id": {
+          "name": "booking_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "service_name": {
+          "name": "service_name",
+          "type": "booking_service_failures_service_name_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "error_message": {
+          "name": "error_message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "booking_service_failures_status_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "retries": {
+          "name": "retries",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_2cbe6ce85fd811a03e69f55ffde": {
+          "name": "FK_2cbe6ce85fd811a03e69f55ffde",
+          "tableFrom": "booking_service_failures",
+          "tableTo": "booking",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "booking_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.booking_logs": {
+      "name": "booking_logs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "details": {
+          "name": "details",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "action": {
+          "name": "action",
+          "type": "booking_logs_action_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "log_time": {
+          "name": "log_time",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "service_name": {
+          "name": "service_name",
+          "type": "booking_logs_service_name_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "booking_id": {
+          "name": "booking_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_6e3a4909bc427bce3d23f4b85a1": {
+          "name": "FK_6e3a4909bc427bce3d23f4b85a1",
+          "tableFrom": "booking_logs",
+          "tableTo": "booking",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "booking_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.label": {
+      "name": "label",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "colorCode": {
+          "name": "colorCode",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'#023047'"
+        },
+        "isActive": {
+          "name": "isActive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "addedAt": {
+          "name": "addedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "addedById": {
+          "name": "addedById",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_4aeb3834e59962c0d915b42f841": {
+          "name": "FK_4aeb3834e59962c0d915b42f841",
+          "tableFrom": "label",
+          "tableTo": "user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "addedById"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.task": {
+      "name": "task",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "taskNumber": {
+          "name": "taskNumber",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "addedDate": {
+          "name": "addedDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "task_status_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'TODO'"
+        },
+        "priority": {
+          "name": "priority",
+          "type": "task_priority_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'MEDIUM'"
+        },
+        "addedById": {
+          "name": "addedById",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "assignedToId": {
+          "name": "assignedToId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "assignedById": {
+          "name": "assignedById",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "taskLabelId": {
+          "name": "taskLabelId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sprintId": {
+          "name": "sprintId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "taskStatusId": {
+          "name": "taskStatusId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "projectId": {
+          "name": "projectId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "feature_id": {
+          "name": "feature_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_13ec6c01e992f6a0150b4c1dbb8": {
+          "name": "FK_13ec6c01e992f6a0150b4c1dbb8",
+          "tableFrom": "task",
+          "tableTo": "user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "addedById"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "FK_fd5f652e2fcdc4a5ab30aaff7a7": {
+          "name": "FK_fd5f652e2fcdc4a5ab30aaff7a7",
+          "tableFrom": "task",
+          "tableTo": "user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "assignedToId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "FK_d67cd7c5e34f48cf33be802898a": {
+          "name": "FK_d67cd7c5e34f48cf33be802898a",
+          "tableFrom": "task",
+          "tableTo": "user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "assignedById"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "FK_bc24781086071b2b0c37535b55e": {
+          "name": "FK_bc24781086071b2b0c37535b55e",
+          "tableFrom": "task",
+          "tableTo": "label",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "taskLabelId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "FK_5ad8a047b8f023bf36b2a232a42": {
+          "name": "FK_5ad8a047b8f023bf36b2a232a42",
+          "tableFrom": "task",
+          "tableTo": "sprint",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "sprintId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "FK_0cbe714983eb0aae5feeee8212b": {
+          "name": "FK_0cbe714983eb0aae5feeee8212b",
+          "tableFrom": "task",
+          "tableTo": "task_status",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "taskStatusId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "FK_3797a20ef5553ae87af126bc2fe": {
+          "name": "FK_3797a20ef5553ae87af126bc2fe",
+          "tableFrom": "task",
+          "tableTo": "project",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "projectId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "FK_0c6b81e80f62b633c1fa9134c0c": {
+          "name": "FK_0c6b81e80f62b633c1fa9134c0c",
+          "tableFrom": "task",
+          "tableTo": "feature",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "feature_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "CHK_5c2eb49100436b2023ed81aadc": {
+          "name": "CHK_5c2eb49100436b2023ed81aadc",
+          "value": "((\"projectId\" IS NOT NULL) AND (feature_id IS NULL)) OR ((\"projectId\" IS NULL) AND (feature_id IS NOT NULL))"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.activity": {
+      "name": "activity",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "action": {
+          "name": "action",
+          "type": "activity_action_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "details": {
+          "name": "details",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "comment": {
+          "name": "comment",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "activityById": {
+          "name": "activityById",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "taskId": {
+          "name": "taskId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_ea80fc5388a11a545a1da727c84": {
+          "name": "FK_ea80fc5388a11a545a1da727c84",
+          "tableFrom": "activity",
+          "tableTo": "user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "activityById"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "FK_2743f8990fde12f9586287eb09f": {
+          "name": "FK_2743f8990fde12f9586287eb09f",
+          "tableFrom": "activity",
+          "tableTo": "task",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "taskId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.admin_audit": {
+      "name": "admin_audit",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "logId": {
+          "name": "logId",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "logFor": {
+          "name": "logFor",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "logAt": {
+          "name": "logAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "message": {
+          "name": "message",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "logById": {
+          "name": "logById",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_3b6bd52ec9ecd628dcdff4d5daf": {
+          "name": "FK_3b6bd52ec9ecd628dcdff4d5daf",
+          "tableFrom": "admin_audit",
+          "tableTo": "user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "logById"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.comment": {
+      "name": "comment",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "isActive": {
+          "name": "isActive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "addedAt": {
+          "name": "addedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "addedById": {
+          "name": "addedById",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "task": {
+          "name": "task",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_02580c0d73323befbbe80922c48": {
+          "name": "FK_02580c0d73323befbbe80922c48",
+          "tableFrom": "comment",
+          "tableTo": "user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "addedById"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "FK_9b11780d812a18e98731a1e65ed": {
+          "name": "FK_9b11780d812a18e98731a1e65ed",
+          "tableFrom": "comment",
+          "tableTo": "task",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "task"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.department": {
+      "name": "department",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "colorCode": {
+          "name": "colorCode",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'#023047'"
+        },
+        "isActive": {
+          "name": "isActive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "addedAt": {
+          "name": "addedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "iconUrl": {
+          "name": "iconUrl",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "addedById": {
+          "name": "addedById",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_e3b679cfb1dc5a8d8b4d55a258e": {
+          "name": "FK_e3b679cfb1dc5a8d8b4d55a258e",
+          "tableFrom": "department",
+          "tableTo": "user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "addedById"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.feature_task_status": {
+      "name": "feature_task_status",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "feature_id": {
+          "name": "feature_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "task_status_id": {
+          "name": "task_status_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_5d0e0dc5e8c60a15477cb654e98": {
+          "name": "FK_5d0e0dc5e8c60a15477cb654e98",
+          "tableFrom": "feature_task_status",
+          "tableTo": "feature",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "feature_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "FK_fe1b36ddd0252e9822240c5ee0b": {
+          "name": "FK_fe1b36ddd0252e9822240c5ee0b",
+          "tableFrom": "feature_task_status",
+          "tableTo": "task_status",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "task_status_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.feature_upload": {
+      "name": "feature_upload",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "feature_id": {
+          "name": "feature_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "upload_id": {
+          "name": "upload_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_301a84a35c8252809d2c65fe6e8": {
+          "name": "FK_301a84a35c8252809d2c65fe6e8",
+          "tableFrom": "feature_upload",
+          "tableTo": "feature",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "feature_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "FK_1f68d659577caaf564ad29dd40f": {
+          "name": "FK_1f68d659577caaf564ad29dd40f",
+          "tableFrom": "feature_upload",
+          "tableTo": "upload_file",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "upload_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.internal_company_member": {
+      "name": "internal_company_member",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "internal_company_id": {
+          "name": "internal_company_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "FK_0c7a94aa04b3a3c2022f02aa425": {
+          "name": "FK_0c7a94aa04b3a3c2022f02aa425",
+          "tableFrom": "internal_company_member",
+          "tableTo": "user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "FK_2f2b4bce25efbd2ed247f1fdc2f": {
+          "name": "FK_2f2b4bce25efbd2ed247f1fdc2f",
+          "tableFrom": "internal_company_member",
+          "tableTo": "internal_company",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "internal_company_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.sprint": {
+      "name": "sprint",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "goal": {
+          "name": "goal",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "isActive": {
+          "name": "isActive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "startDate": {
+          "name": "startDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "endDate": {
+          "name": "endDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.role": {
+      "name": "role",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "isActive": {
+          "name": "isActive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role_type": {
+          "name": "role_type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "true"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "UQ_ae4578dcaed5adff96595e61660": {
+          "columns": [
+            "name"
+          ],
+          "nullsNotDistinct": false,
+          "name": "UQ_ae4578dcaed5adff96595e61660"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.role_permissions_permission": {
+      "name": "role_permissions_permission",
+      "schema": "",
+      "columns": {
+        "roleId": {
+          "name": "roleId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "permissionId": {
+          "name": "permissionId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "IDX_b36cb2e04bc353ca4ede00d87b": {
+          "name": "IDX_b36cb2e04bc353ca4ede00d87b",
+          "columns": [
+            {
+              "expression": "roleId",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "IDX_bfbc9e263d4cea6d7a8c9eb3ad": {
+          "name": "IDX_bfbc9e263d4cea6d7a8c9eb3ad",
+          "columns": [
+            {
+              "expression": "permissionId",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "FK_b36cb2e04bc353ca4ede00d87b9": {
+          "name": "FK_b36cb2e04bc353ca4ede00d87b9",
+          "tableFrom": "role_permissions_permission",
+          "tableTo": "role",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "roleId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "FK_bfbc9e263d4cea6d7a8c9eb3ad2": {
+          "name": "FK_bfbc9e263d4cea6d7a8c9eb3ad2",
+          "tableFrom": "role_permissions_permission",
+          "tableTo": "permission",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "permissionId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "PK_b817d7eca3b85f22130861259dd": {
+          "name": "PK_b817d7eca3b85f22130861259dd",
+          "columns": [
+            "roleId",
+            "permissionId"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.feature_team_member": {
+      "name": "feature_team_member",
+      "schema": "",
+      "columns": {
+        "feature_id": {
+          "name": "feature_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "IDX_17c2b87b2c6c5449508a76ae67": {
+          "name": "IDX_17c2b87b2c6c5449508a76ae67",
+          "columns": [
+            {
+              "expression": "user_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "IDX_8ba8a828914adeb197b0c9ece4": {
+          "name": "IDX_8ba8a828914adeb197b0c9ece4",
+          "columns": [
+            {
+              "expression": "feature_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "FK_8ba8a828914adeb197b0c9ece43": {
+          "name": "FK_8ba8a828914adeb197b0c9ece43",
+          "tableFrom": "feature_team_member",
+          "tableTo": "feature",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "feature_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "FK_17c2b87b2c6c5449508a76ae675": {
+          "name": "FK_17c2b87b2c6c5449508a76ae675",
+          "tableFrom": "feature_team_member",
+          "tableTo": "user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "PK_5f025630098a6a18109e8d1ab8b": {
+          "name": "PK_5f025630098a6a18109e8d1ab8b",
+          "columns": [
+            "feature_id",
+            "user_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.team_member": {
+      "name": "team_member",
+      "schema": "",
+      "columns": {
+        "projectId": {
+          "name": "projectId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "IDX_c243bdb10b2a6e9e50d66d70da": {
+          "name": "IDX_c243bdb10b2a6e9e50d66d70da",
+          "columns": [
+            {
+              "expression": "projectId",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "IDX_d2be3e8fc9ab0f69673721c7fc": {
+          "name": "IDX_d2be3e8fc9ab0f69673721c7fc",
+          "columns": [
+            {
+              "expression": "userId",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "FK_c243bdb10b2a6e9e50d66d70da2": {
+          "name": "FK_c243bdb10b2a6e9e50d66d70da2",
+          "tableFrom": "team_member",
+          "tableTo": "project",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "projectId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "FK_d2be3e8fc9ab0f69673721c7fc3": {
+          "name": "FK_d2be3e8fc9ab0f69673721c7fc3",
+          "tableFrom": "team_member",
+          "tableTo": "user",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "PK_f7c8ab23fa067c331b145db6716": {
+          "name": "PK_f7c8ab23fa067c331b145db6716",
+          "columns": [
+            "projectId",
+            "userId"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.project_uploads": {
+      "name": "project_uploads",
+      "schema": "",
+      "columns": {
+        "projectId": {
+          "name": "projectId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "uploadId": {
+          "name": "uploadId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "IDX_23cecb0cfcf129b5826c934cd7": {
+          "name": "IDX_23cecb0cfcf129b5826c934cd7",
+          "columns": [
+            {
+              "expression": "projectId",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "IDX_26a083346a1aab150cb3a550c2": {
+          "name": "IDX_26a083346a1aab150cb3a550c2",
+          "columns": [
+            {
+              "expression": "uploadId",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "uuid_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "FK_23cecb0cfcf129b5826c934cd77": {
+          "name": "FK_23cecb0cfcf129b5826c934cd77",
+          "tableFrom": "project_uploads",
+          "tableTo": "project",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "projectId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "FK_26a083346a1aab150cb3a550c28": {
+          "name": "FK_26a083346a1aab150cb3a550c28",
+          "tableFrom": "project_uploads",
+          "tableTo": "upload_file",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "uploadId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "PK_89965edcd09c12866e1548a3766": {
+          "name": "PK_89965edcd09c12866e1548a3766",
+          "columns": [
+            "projectId",
+            "uploadId"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    },
+    "public.task_uploads": {
+      "name": "task_uploads",
+      "schema": "",
+      "columns": {
+        "taskId": {
+          "name": "taskId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "uploadId": {
+          "name": "uploadId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "IDX_062413e9f8a87a5526d5148635": {
+          "name": "IDX_062413e9f8a87a5526d5148635",
+          "columns": [
+            {
+              "expression": "uploadId",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "uuid_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "IDX_0fdc2926eb58b8ab68648ed44c": {
+          "name": "IDX_0fdc2926eb58b8ab68648ed44c",
+          "columns": [
+            {
+              "expression": "taskId",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "FK_0fdc2926eb58b8ab68648ed44c4": {
+          "name": "FK_0fdc2926eb58b8ab68648ed44c4",
+          "tableFrom": "task_uploads",
+          "tableTo": "task",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "taskId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "FK_062413e9f8a87a5526d51486352": {
+          "name": "FK_062413e9f8a87a5526d51486352",
+          "tableFrom": "task_uploads",
+          "tableTo": "upload_file",
+          "schemaTo": "public",
+          "columnsFrom": [
+            "uploadId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "PK_f3d9930b9177debddec7f2095e2": {
+          "name": "PK_f3d9930b9177debddec7f2095e2",
+          "columns": [
+            "taskId",
+            "uploadId"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.activity_action_enum": {
+      "name": "activity_action_enum",
+      "values": [
+        "CREATED_TICKET",
+        "ASSIGNED_TICKET",
+        "MOVED_TICKET",
+        "UPDATED_TICKET",
+        "COMMENTED_TICKET",
+        "DELETED_COMMENT",
+        "EDITED_COMMENT"
+      ],
+      "schema": "public"
+    },
+    "public.booking_logs_action_enum": {
+      "name": "booking_logs_action_enum",
+      "values": [
+        "CREATED",
+        "ASSIGNED",
+        "MOVED",
+        "UPDATED",
+        "COMMENTED",
+        "DELETED",
+        "EDITED",
+        "EMAIL_SENT",
+        "NOTIFICATION_SENT"
+      ],
+      "schema": "public"
+    },
+    "public.booking_logs_service_name_enum": {
+      "name": "booking_logs_service_name_enum",
+      "values": [
+        "BOOKING_CREATED",
+        "BOOKING_EMAIL",
+        "BOOKING_TASK",
+        "BOOKING_NOTIFICATION",
+        "BOOKING_LOGS",
+        "BOOKING_ADMIN_CUSTOMER"
+      ],
+      "schema": "public"
+    },
+    "public.booking_service_failures_service_name_enum": {
+      "name": "booking_service_failures_service_name_enum",
+      "values": [
+        "BOOKING_CREATED",
+        "BOOKING_EMAIL",
+        "BOOKING_TASK",
+        "BOOKING_NOTIFICATION",
+        "BOOKING_LOGS",
+        "BOOKING_ADMIN_CUSTOMER"
+      ],
+      "schema": "public"
+    },
+    "public.booking_service_failures_status_enum": {
+      "name": "booking_service_failures_status_enum",
+      "values": [
+        "FAILED",
+        "IN_PROGRESS",
+        "RETRY_COMPLETED",
+        "RETRY_FAILED",
+        "STARTED",
+        "BACKLOG"
+      ],
+      "schema": "public"
+    },
+    "public.customer_credentialtype_enum": {
+      "name": "customer_credentialtype_enum",
+      "values": [
+        "ADMIN",
+        "GOOGLE",
+        "CUSTOMER_CREDENTIAL"
+      ],
+      "schema": "public"
+    },
+    "public.email_notifications_status_enum": {
+      "name": "email_notifications_status_enum",
+      "values": [
+        "pending",
+        "sent",
+        "failed",
+        "queued",
+        "in_progress",
+        "completed"
+      ],
+      "schema": "public"
+    },
+    "public.email_notifications_type_enum": {
+      "name": "email_notifications_type_enum",
+      "values": [
+        "user_email_verification",
+        "booking_confirmation"
+      ],
+      "schema": "public"
+    },
+    "public.permission_group_permission_type_enum": {
+      "name": "permission_group_permission_type_enum",
+      "values": [
+        "NORMAL",
+        "NORMAL_SETTINGS",
+        "COMPANY_SETTINGS",
+        "SUPER_ADMIN_SETTINGS"
+      ],
+      "schema": "public"
+    },
+    "public.project_priority_enum": {
+      "name": "project_priority_enum",
+      "values": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL",
+        "BACKLOG"
+      ],
+      "schema": "public"
+    },
+    "public.project_status_enum": {
+      "name": "project_status_enum",
+      "values": [
+        "TODO",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "UNDER_REVIEW",
+        "STARTED",
+        "BACKLOG"
+      ],
+      "schema": "public"
+    },
+    "public.room_type_facilities_enum": {
+      "name": "room_type_facilities_enum",
+      "values": [
+        "WIFI",
+        "AIR_CONDITIONING",
+        "TV",
+        "MINI_BAR",
+        "ROOM_SERVICE",
+        "SWIMMING_POOL",
+        "GYM",
+        "PARKING",
+        "BREAKFAST_INCLUDED",
+        "PET_FRIENDLY",
+        "SEA_VIEW",
+        "BALCONY",
+        "SAFE_BOX",
+        "HAIR_DRYER",
+        "COFFEE_MAKER"
+      ],
+      "schema": "public"
+    },
+    "public.task_priority_enum": {
+      "name": "task_priority_enum",
+      "values": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL",
+        "BACKLOG"
+      ],
+      "schema": "public"
+    },
+    "public.task_status_enum": {
+      "name": "task_status_enum",
+      "values": [
+        "TODO",
+        "IN_PROGRESS",
+        "DONE",
+        "COMPLETED",
+        "FOR_FIX",
+        "UNDER_REVIEW"
+      ],
+      "schema": "public"
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {
+      "room_type": {
+        "columns": {
+          "facilities": {
+            "isArray": true,
+            "dimensions": 1,
+            "rawType": "room_type_facilities_enum"
+          }
+        }
+      }
+    }
+  }
+}
