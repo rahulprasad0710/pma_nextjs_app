@@ -210,7 +210,7 @@ export const role = pgTable(
         id: serial().primaryKey().notNull(),
         isActive: boolean().default(true).notNull(),
         name: varchar().notNull(),
-        roleType: varchar("role_type").default(true).notNull(),
+        roleType: varchar("role_type"),
         description: varchar(),
     },
     (table) => [unique("UQ_ae4578dcaed5adff96595e61660").on(table.name)]

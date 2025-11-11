@@ -34,7 +34,7 @@ export async function POST(req: Request) {
             );
 
         // Group by roomTypeId
-        const result = roomTypeId.map((id) => ({
+        const result = roomTypeId.map((id: number) => ({
             roomTypeId: id,
             roomIdList: bookingRooms
                 .filter((br) => br.roomTypeId === id)

@@ -95,7 +95,7 @@ const BookingPage = () => {
             console.log("LOG: ~ fetchData ~ result:", result);
             setData(result);
         } catch (err) {
-            setError(err.message);
+            // setError(err.message);
             console.error("Error fetching data:", err);
         } finally {
             setLoading(false);
@@ -128,7 +128,7 @@ const BookingPage = () => {
             setAvailableRooms(result);
             setIsAvailableChecked(true);
         } catch (err) {
-            setError(err.message);
+            // setError(err.message);
             console.error("Error sending data:", err);
         } finally {
             setLoading(false);

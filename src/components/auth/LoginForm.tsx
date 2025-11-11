@@ -35,8 +35,8 @@ export default function LoginFormComponent() {
                 rememberMe: payload.remember,
                 callbackURL:
                     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
-                associatedInternalCompanyId: 1,
-                isAccountByAdmin: false,
+                // associatedInternalCompanyId: 1,
+                // isAccountByAdmin: false,
             });
 
             if (error) {
