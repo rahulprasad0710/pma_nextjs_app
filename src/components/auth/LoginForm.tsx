@@ -33,7 +33,7 @@ export default function LoginFormComponent() {
                 email: payload.email,
                 password: payload.password,
                 rememberMe: payload.remember,
-                callbackURL: process.env.NEXT_PUBLIC_BASE_URL,
+                callbackURL: "https://main.d3gb60s106ioul.amplifyapp.com",
                 // associatedInternalCompanyId: 1,
                 // isAccountByAdmin: false,
             });
@@ -61,7 +61,7 @@ export default function LoginFormComponent() {
             const data = await authClient.signIn.social({
                 provider: "google",
                 scopes: ["profile", "email"],
-                callbackURL: process.env.NEXT_PUBLIC_BASE_URL,
+                callbackURL: "https://main.d3gb60s106ioul.amplifyapp.com",
             });
             if (data?.error) {
                 toast.error(
