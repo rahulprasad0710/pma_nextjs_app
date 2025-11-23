@@ -33,8 +33,7 @@ export default function LoginFormComponent() {
                 email: payload.email,
                 password: payload.password,
                 rememberMe: payload.remember,
-                callbackURL:
-                    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+                callbackURL: process.env.NEXT_PUBLIC_BASE_URL,
                 // associatedInternalCompanyId: 1,
                 // isAccountByAdmin: false,
             });
@@ -55,21 +54,28 @@ export default function LoginFormComponent() {
     };
 
     const handleGoogleSignIn = async () => {
-        const data = await authClient.signIn.social({
-            provider: "google",
-            scopes: ["profile", "email"],
-            callbackURL:
-                process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
-        });
-        if (data?.error) {
-            toast.error(
-                data.error?.message || "Google sign-in failed. Try again."
-            );
-        }
+        try {
+            console.log({
+                NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
+            });
+            const data = await authClient.signIn.social({
+                provider: "google",
+                scopes: ["profile", "email"],
+                callbackURL: process.env.NEXT_PUBLIC_BASE_URL,
+            });
+            if (data?.error) {
+                toast.error(
+                    data.error?.message || "Google sign-in failed. Try again."
+                );
+            }
 
-        if (data?.data?.url) {
-            toast.success("Login successful!");
-            window.location.href = data?.data?.url || "/";
+            if (data?.data?.url) {
+                toast.success("Login successful!");
+                window.location.href = data?.data?.url || "/";
+            }
+        } catch (error) {
+            console.log("LOG: ~ handleGoogleSignIn ~ error:", error);
+            toast.error("Google sign-in failed. Try again.");
         }
     };
 

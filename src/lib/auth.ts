@@ -1,7 +1,6 @@
 import * as originalSchema from "@/db/schema";
 
 import { betterAuth } from "better-auth";
-import { createAuthMiddleware } from "better-auth/api";
 import { db } from "@/db";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
