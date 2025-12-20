@@ -13,9 +13,9 @@ const Header = () => {
         data,
     });
     return (
-        <div className=' bg-black py-4 shadow-md  z-50 w-full transition-all duration-500'>
+        <div className=' bg-stone-50 py-4 shadow-md  z-50 w-full transition-all duration-500'>
             <div className='container mx-auto flex flex-col items-center gap-y-6 lg:flex-row lg:justify-between lg:gap-y-0'>
-                <Link href='/'>
+                <Link href='/' className=' shadow-sm'>
                     <Image
                         src='/images/logo.png'
                         alt='Logo'
@@ -27,7 +27,7 @@ const Header = () => {
                     <ul className='flex items-center gap-x-6 font-tertiary text-[15px]  tracking-wider lg:gap-x-8'>
                         <Link
                             href='/rooms'
-                            className='text-amber-400 hover:text-primary/90'
+                            className='text-amber-950 hover:text-primary/90'
                         >
                             Rooms
                         </Link>
@@ -36,7 +36,7 @@ const Header = () => {
                         ) : (
                             <Link
                                 href='/auth/login'
-                                className=' text-amber-400'
+                                className=' text-amber-950'
                                 type='button'
                             >
                                 Login

@@ -15,14 +15,14 @@ import Image from "next/image";
 const SwiperImages = () => {
     const ImageList = [
         {
-            srcAddress: "/images/h1.jpg",
+            srcAddress: "/images/h2.jpg",
         },
         {
             srcAddress: "/images/h2.jpg",
         },
 
         {
-            srcAddress: "/images/h3.jpg",
+            srcAddress: "/images/h1.jpg",
         },
     ];
 
