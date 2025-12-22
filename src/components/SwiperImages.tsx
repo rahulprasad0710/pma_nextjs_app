@@ -11,6 +11,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import { Button } from "./ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 const SwiperImages = () => {
     const ImageList = [
@@ -60,9 +61,12 @@ const SwiperImages = () => {
                                 <h1 className='mx-auto mb-6 max-w-[920px] font-primary text-[32px] uppercase tracking-[2px] lg:text-[68px]'>
                                     Your Luxury Hotel For Vacation
                                 </h1>
-                                <Button className='btn px-12 py-6 cursor-pointer bg-primary text-white mx-auto'>
-                                    See our rooms
-                                </Button>
+                                <Link
+                                    href='/rooms'
+                                    className='btn px-12 py-4 cursor-pointer bg-primary text-white mx-auto'
+                                >
+                                    See Rooms
+                                </Link>
                             </div>
                         </div>
                     </SwiperSlide>

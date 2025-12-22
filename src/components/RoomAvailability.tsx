@@ -10,9 +10,27 @@ import {
 import { Button } from "./ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import React from "react";
+import { format } from "date-fns";
 
 const RoomAvailability = () => {
-    const [date, setDate] = React.useState<Date | undefined>(new Date());
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    const [checkInDate, setCheckInDate] = React.useState<Date | undefined>(
+        undefined
+    );
+    const [checkOutDate, setCheckOutDate] = React.useState<Date | undefined>(
+        undefined
+    );
+
+    const handleDayClick = (day: Date) => {
+        setBeforeCheckOutDate(day);
+        setCheckOutDate(undefined);
+    };
+
+    const [beforeCheckOutDate, setBeforeCheckOutDate] =
+        React.useState<Date>(today);
+
     return (
         <div className='relative max-w-6xl m-auto  '>
             <div className='mt-4 bg-accent/20 p-4 lg:absolute lg:inset-x-0 lg:-top-20 lg:z-30 lg:p-0  lg:shadow-xl '>
@@ -22,16 +40,23 @@ const RoomAvailability = () => {
                             <div className='relative h-full w-full bg-white'>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger className='flex h-full  items-center justify-between px-8  w-full cursor-pointer'>
-                                        Check In
+                                        {checkInDate
+                                            ? format(
+                                                  checkInDate ?? new Date(),
+                                                  "PPP"
+                                              )
+                                            : "Check In"}
                                         <Calendar1Icon className='text-base text-accent-hover' />
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent className='w-full!'>
                                         <Calendar
                                             mode='single'
-                                            selected={date}
-                                            onSelect={setDate}
+                                            selected={checkInDate}
+                                            onSelect={setCheckInDate}
+                                            onDayClick={handleDayClick}
                                             className='w-full !border-0 focus-visible:ring-0'
                                             captionLayout='dropdown'
+                                            disabled={{ before: today }}
                                         />
                                     </DropdownMenuContent>
                                 </DropdownMenu>
@@ -41,16 +66,24 @@ const RoomAvailability = () => {
                             <div className='relative h-full w-full bg-white'>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger className='flex h-full  items-center justify-between px-8  w-full cursor-pointer'>
-                                        Check Out
+                                        {checkOutDate
+                                            ? format(
+                                                  checkOutDate ?? new Date(),
+                                                  "PPP"
+                                              )
+                                            : "Check Out"}
                                         <Calendar1Icon className='text-base text-accent-hover' />
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent className='w-full!'>
                                         <Calendar
                                             mode='single'
-                                            selected={date}
-                                            onSelect={setDate}
+                                            selected={checkOutDate}
+                                            onSelect={setCheckOutDate}
                                             className='w-full !border-0 focus-visible:ring-0'
                                             captionLayout='dropdown'
+                                            disabled={{
+                                                before: beforeCheckOutDate,
+                                            }}
                                         />
                                     </DropdownMenuContent>
                                 </DropdownMenu>
@@ -106,7 +139,7 @@ const RoomAvailability = () => {
                         </div>
                         <div className='flex-1 '>
                             <div className='relative h-full w-full bg-white'>
-                                <Button className='flex h-full bg-primary w-full items-center text-xl justify-between px-8 cursor-pointer'>
+                                <Button className=' h-full bg-primary w-[300px] text-center  text-xl  px-8 cursor-pointer'>
                                     Check Availability
                                 </Button>
                             </div>

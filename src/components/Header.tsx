@@ -13,7 +13,7 @@ const Header = () => {
         data,
     });
     return (
-        <div className=' bg-stone-50 py-4 shadow-md  z-50 w-full transition-all duration-500'>
+        <div className=' bg-white py-4 shadow-2xl  z-50 w-full transition-all duration-500'>
             <div className='container mx-auto flex flex-col items-center gap-y-6 lg:flex-row lg:justify-between lg:gap-y-0'>
                 <Link href='/' className=' shadow-sm'>
                     <Image

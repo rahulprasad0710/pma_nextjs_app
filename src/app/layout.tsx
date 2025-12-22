@@ -16,8 +16,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-    title: "My App",
-    description: "Example with custom fonts",
+    title: "Velora Escape",
+    description: "Your Luxury hotel for vacation",
 };
 
 const gildaDisplay = Gilda_Display({
