@@ -63,7 +63,7 @@ export default function LoginFormComponent() {
             const data = await authClient.signIn.social({
                 provider: "google",
                 scopes: ["profile", "email"],
-                callbackURL: "https://main.d3gb60s106ioul.amplifyapp.com",
+                callbackURL: callBackUrl,
             });
             if (data?.error) {
                 toast.error(
