@@ -138,22 +138,22 @@ const Rooms = async () => {
                     ))}
                 </div>
             </div>
-            <div className=' bg-amber-50 py-16'>
+            <div className=' bg-amber-600 py-16'>
                 <div className='container mx-auto  max-w-7xl'>
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
                         {features.map((feature, index) => (
                             <div
                                 key={index}
-                                className='flex flex-row  text-center p-6 bg-amber-50  shadow-none '
+                                className='flex flex-row  text-center p-6 bg-amber-600  shadow-none  '
                             >
-                                <div className='mb-4 text-amber-500 min-w-[60px] '>
+                                <div className='mb-4 text-amber-50 min-w-[60px] '>
                                     {feature.icon}
                                 </div>
                                 <div className='flex-1 text-left'>
                                     <h4 className='text-xl font-bold mb-2 text-black'>
                                         {feature.title}
                                     </h4>
-                                    <p className='text-gray-600'>
+                                    <p className='text-gray-100'>
                                         {feature.description}
                                     </p>
                                 </div>
