@@ -26,8 +26,8 @@ interface LoginFormInputs {
 
 export default function LoginFormComponent() {
     const form = useForm<LoginFormInputs>();
+    const callBackUrlGoogle = "/api/auth/callback/google";
     const callBackUrl = "https://veloraescape.publicvm.com";
-    const callBackUrl1 = "https://main.d3gb60s106ioul.amplifyapp.com";
 
     const onSubmit = async (payload: LoginFormInputs) => {
         try {
@@ -63,7 +63,7 @@ export default function LoginFormComponent() {
             const data = await authClient.signIn.social({
                 provider: "google",
                 scopes: ["profile", "email"],
-                callbackURL: callBackUrl,
+                callbackURL: `${callBackUrlGoogle}`,
             });
             if (data?.error) {
                 toast.error(
