@@ -26,6 +26,8 @@ interface LoginFormInputs {
 
 export default function LoginFormComponent() {
     const form = useForm<LoginFormInputs>();
+    const callBackUrl = "https://veloraescape.publicvm.com";
+    const callBackUrl1 = "https://main.d3gb60s106ioul.amplifyapp.com";
 
     const onSubmit = async (payload: LoginFormInputs) => {
         try {
@@ -33,7 +35,7 @@ export default function LoginFormComponent() {
                 email: payload.email,
                 password: payload.password,
                 rememberMe: payload.remember,
-                callbackURL: "https://main.d3gb60s106ioul.amplifyapp.com",
+                callbackURL: callBackUrl,
                 // associatedInternalCompanyId: 1,
                 // isAccountByAdmin: false,
             });
